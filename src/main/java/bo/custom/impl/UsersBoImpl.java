@@ -8,6 +8,7 @@ import dto.UsersDto;
 import entity.Users;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UsersBoImpl implements UsersBo {
@@ -37,6 +38,16 @@ public class UsersBoImpl implements UsersBo {
 
     @Override
     public List<UsersDto> allUsers() throws SQLException, ClassNotFoundException {
-        return null;
+        List<Users> entityList = usersDao.getAll();
+        List<UsersDto> list = new ArrayList<>();
+        for (Users users:entityList) {
+            list.add(new UsersDto(
+                    users.getEmail(),
+                    users.getPassword(),
+                    users.getJobRole()
+            ));
+        }
+        return list;
     }
+
 }
