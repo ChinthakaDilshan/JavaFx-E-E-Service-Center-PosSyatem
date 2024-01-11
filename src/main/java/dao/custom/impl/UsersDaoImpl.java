@@ -56,10 +56,6 @@ public class UsersDaoImpl implements UsersDao {
         return list;
     }
 
-    @Override
-    public UsersDto searchCustomer(String email) {
-        return null;
-    }
 
     @Override
     public UsersDto searchUsers(String email) {

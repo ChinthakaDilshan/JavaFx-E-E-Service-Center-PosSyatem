@@ -8,7 +8,7 @@ import dao.util.DaoType;
 import static dao.util.BoType.USERS;
 
 public class DaoFactory {
-    private static DaoFactory daoFactory;
+    private static DaoFactory daoFactory = null;
 
     private DaoFactory(){
 
