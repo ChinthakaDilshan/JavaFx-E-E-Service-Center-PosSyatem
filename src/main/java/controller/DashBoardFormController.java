@@ -44,7 +44,14 @@ public class DashBoardFormController {
     }
 
     public void btnCustomerOnAction(ActionEvent actionEvent) {
-
+        Stage stage = (Stage) paneDashBoard.getScene().getWindow();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/CustomerForm.fxml"))));
+            stage.centerOnScreen();
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void btnReportsOnAction(ActionEvent actionEvent) {
