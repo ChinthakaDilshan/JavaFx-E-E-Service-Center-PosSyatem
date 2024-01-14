@@ -1,10 +1,9 @@
 package dao.custom.impl;
 
+import dao.custom.ItemDao;
 import dao.util.HibernateUtil;
 import dto.ItemDto;
-import dao.custom.ItemDao;
 import entity.Item;
-import entity.Users;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -14,11 +13,7 @@ import java.util.List;
 
 public class ItemDaoImpl implements ItemDao {
     @Override
-    public ItemDto searchItem(String code) {
-        return null;
-    }
-    @Override
-    public boolean save(Item entity)  {
+    public boolean save(Item entity) throws SQLException, ClassNotFoundException {
         Session session = HibernateUtil.getSession();
         Transaction transaction = session.beginTransaction();
         session.save(entity);
@@ -32,8 +27,8 @@ public class ItemDaoImpl implements ItemDao {
         Session session = HibernateUtil.getSession();
 
         Transaction transaction = session.beginTransaction();
-        Item item = session.find(Item.class, entity.getCode());
-        item.setName(entity.getName());
+        Item item = session.find(Item.class, entity.getItemCode());
+        item.setItemName(entity.getItemName());
         item.setCategory(entity.getCategory());
         session.save(item);
         transaction.commit();
@@ -54,11 +49,14 @@ public class ItemDaoImpl implements ItemDao {
     @Override
     public List<Item> getAll() throws SQLException, ClassNotFoundException {
         Session session = HibernateUtil.getSession();
-        Query query = session.createQuery("FROM Item ");
+        Query query = session.createQuery("FROM Item");
         List<Item> list = query.list();
         session.close();
         return list;
     }
 
-
+    @Override
+    public ItemDto searchItem(String itemCode) {
+        return null;
+    }
 }

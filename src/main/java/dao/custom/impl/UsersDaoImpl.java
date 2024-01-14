@@ -50,8 +50,6 @@ public class UsersDaoImpl implements UsersDao {
         Session session = HibernateUtil.getSession();
         Query query = session.createQuery("FROM Users");
         List<Users> list = query.list();
-
-
         session.close();
         return list;
     }
