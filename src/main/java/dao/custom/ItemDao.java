@@ -5,7 +5,5 @@ import dto.ItemDto;
 import entity.Item;
 
 public interface ItemDao extends CrudDao<Item> {
-    ItemDto searchItem(String code);
-
-
+    ItemDto searchItem(String itemCode);
 }

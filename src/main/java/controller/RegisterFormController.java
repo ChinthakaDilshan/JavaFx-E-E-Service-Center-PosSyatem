@@ -1,7 +1,7 @@
 package controller;
 
 
-import bo.custom.BoFactory;
+import bo.BoFactory;
 import bo.custom.UsersBo;
 import dao.util.BoType;
 import dto.UsersDto;
@@ -56,17 +56,11 @@ public class RegisterFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         ObservableList<String> jobRoles = FXCollections.observableArrayList(
                 "Owner",
                 "Manager",
                 "Employee"
-
         );
-
-
         txtJobRoleReg.setItems(jobRoles);
-
-
     }
 }

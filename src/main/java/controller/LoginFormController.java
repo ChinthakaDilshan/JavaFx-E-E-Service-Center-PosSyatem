@@ -1,12 +1,9 @@
 package controller;
 
-import bo.custom.BoFactory;
+import bo.BoFactory;
 import dao.util.BoType;
 import dto.UsersDto;
 import bo.custom.UsersBo;
-import dto.tm.UsersTm;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -17,7 +14,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class LoginFormController {

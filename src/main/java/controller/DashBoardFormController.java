@@ -60,7 +60,14 @@ public class DashBoardFormController {
     }
 
     public void btnItemOnAction(ActionEvent actionEvent) {
-
+        Stage stage = (Stage) paneDashBoard.getScene().getWindow();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/ItemForm.fxml"))));
+            stage.setTitle("Item Form");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void btnRegisterOnAction(ActionEvent actionEvent) throws IOException {
@@ -70,6 +77,7 @@ public class DashBoardFormController {
         stage.initOwner(mainStage.getScene().getWindow());
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/RegisterForm.fxml"))));
         stage.centerOnScreen();
+        stage.setTitle("Register Form");
         stage.setResizable(false);
         stage.show();
     }
