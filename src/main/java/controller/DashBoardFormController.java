@@ -63,7 +63,14 @@ public class DashBoardFormController {
     }
 
     public void btnPlaceOrderOnAction(ActionEvent actionEvent) {
-
+        Stage stage = (Stage) paneDashBoard.getScene().getWindow();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/PlaceOrderForm.fxml"))));
+            stage.setTitle("Place Order Form");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void btnItemOnAction(ActionEvent actionEvent) {
