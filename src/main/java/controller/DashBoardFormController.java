@@ -95,4 +95,15 @@ public class DashBoardFormController {
         stage.setResizable(false);
         stage.show();
     }
+
+    public void btnRepairItemOnAction(ActionEvent actionEvent) {
+        Stage stage = (Stage) paneDashBoard.getScene().getWindow();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/RepairItemForm.fxml"))));
+            stage.setTitle("Item Form");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
