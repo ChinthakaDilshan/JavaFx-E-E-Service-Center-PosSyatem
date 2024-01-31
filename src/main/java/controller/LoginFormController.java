@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -57,7 +58,15 @@ public class LoginFormController {
         stage.show();
     }
 
-    public void btnFogotPasswordOnAction(ActionEvent actionEvent) {
-
+    public void btnFogotPasswordOnAction(ActionEvent actionEvent) throws IOException {
+        Stage mainStage = (Stage) paneLogin.getScene().getWindow();
+        Stage stage = new Stage();
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(mainStage.getScene().getWindow());
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/FogotPasswordForm.fxml"))));
+        stage.centerOnScreen();
+        stage.setTitle("Forgot Password Form");
+        stage.setResizable(false);
+        stage.show();
     }
 }
