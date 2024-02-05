@@ -11,4 +11,6 @@ public class OrderDetailDto {
     private String orderId;
     private String itemCode;
     private double advancePrice;
+    private String status;
+    private String issue;
 }

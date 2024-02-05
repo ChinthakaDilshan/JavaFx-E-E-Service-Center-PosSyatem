@@ -25,4 +25,6 @@ public class OrderDetail {
     Orders orders;
 
     private double advancePrice;
+    private String status;
+    private String issue;
 }
