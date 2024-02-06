@@ -4,9 +4,13 @@ import bo.custom.UsersBo;
 import dao.DaoFactory;
 import dao.custom.UsersDao;
 import dao.util.DaoType;
+import db.DBConnection;
 import dto.UsersDto;
 import entity.Users;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +25,7 @@ public class UsersBoImpl implements UsersBo {
                 dto.getJobRole()
         ));
     }
+
 
     @Override
     public boolean updateUsers(UsersDto dto) throws SQLException, ClassNotFoundException {
@@ -49,5 +54,6 @@ public class UsersBoImpl implements UsersBo {
         }
         return list;
     }
+
 
 }
