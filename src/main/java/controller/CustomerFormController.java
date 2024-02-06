@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CustomerFormController {
     public BorderPane paneCustomer;
@@ -37,7 +39,7 @@ public class CustomerFormController {
     public TableColumn colOption;
     private CustomerBo customerBo = BoFactory.getInstance().getBo(BoType.CUSTOMER);
 
-    public void initialize(){
+    public void initialize() {
         colCustomerID.setCellValueFactory(new PropertyValueFactory<>("customerCode"));
         colCustomerName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         colCustomerContact.setCellValueFactory(new PropertyValueFactory<>("customerContact"));
@@ -49,7 +51,6 @@ public class CustomerFormController {
             setData((CustomerTm) newValue);
         });
     }
-
 
 
     private void setData(CustomerTm newValue) {
@@ -66,8 +67,8 @@ public class CustomerFormController {
         ObservableList<CustomerTm> tmList = FXCollections.observableArrayList();
 
         try {
-            List<CustomerDto> dtoList  = customerBo.allCustomers();
-            for (CustomerDto dto:dtoList) {
+            List<CustomerDto> dtoList = customerBo.allCustomers();
+            for (CustomerDto dto : dtoList) {
                 Button btn = new Button("Delete");
                 CustomerTm c = new CustomerTm(
                         dto.getCustomerCode(),
@@ -93,18 +94,17 @@ public class CustomerFormController {
 
         try {
             boolean isDeleted = customerBo.deleteCustomer(id);
-            if (isDeleted){
-                new Alert(Alert.AlertType.INFORMATION,"Customer Deleted!").show();
+            if (isDeleted) {
+                new Alert(Alert.AlertType.INFORMATION, "Customer Deleted!").show();
                 loadCustomerTable();
-            }else{
-                new Alert(Alert.AlertType.ERROR,"Something went wrong!").show();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
             }
 
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
     }
-
 
 
     public void btnBackOnAction(ActionEvent actionEvent) {
@@ -126,30 +126,61 @@ public class CustomerFormController {
         txtCustomerID.clear();
         txtCustomerID.setEditable(true);
     }
+
     public void txtSearchOnKeyTyped(KeyEvent keyEvent) {
 
     }
 
     public void btnSaveOnAction(ActionEvent actionEvent) {
-        CustomerDto dto = new CustomerDto(txtCustomerID.getText(),
-                txtCustomerName.getText(),
-                Integer.parseInt(txtCustomerContact.getText()),
-                txtCustomerEmail.getText()
-        );
+        String customerId = txtCustomerID.getText();
+        String customerName = txtCustomerName.getText();
+        String customerContact = txtCustomerContact.getText();
+        String customerEmail = txtCustomerEmail.getText();
 
-        try {
-            boolean isSaved = customerBo.saveCustomer(dto);
-            if (isSaved){
-                new Alert(Alert.AlertType.INFORMATION,"Customer Saved!").show();
-                loadCustomerTable();
-                clearFields();
+        if (isValidCustomerId(customerId)) {
+            if (isValidContactNumber(customerContact)) {
+                if (isValidEmail(customerEmail)) {
+                    CustomerDto dto = new CustomerDto(customerId, customerName, Integer.parseInt(customerContact), customerEmail);
+                    try {
+                        boolean isSaved = customerBo.saveCustomer(dto);
+                        if (isSaved) {
+                            new Alert(Alert.AlertType.INFORMATION, "Customer Saved!").show();
+                            loadCustomerTable();
+                            clearFields();
+                        }
+                    } catch (SQLIntegrityConstraintViolationException ex) {
+                        new Alert(Alert.AlertType.ERROR, "Duplicate Entry").show();
+                    } catch (ClassNotFoundException | SQLException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Invalid Email!").show();
+                }
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Invalid Contact Number").show();
             }
-
-        } catch (SQLIntegrityConstraintViolationException ex){
-            new Alert(Alert.AlertType.ERROR,"Duplicate Entry").show();
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Invalid Customer ID!").show();
         }
+
+    }
+
+    private boolean isValidCustomerId(String customerId) {
+        return customerId.matches("^C\\d{4}$");
+    }
+
+    private boolean isValidContactNumber(String contactNumber) {
+        String contactRegex = "^0\\d{9}$";
+        Pattern pattern = Pattern.compile(contactRegex);
+        Matcher matcher = pattern.matcher(contactNumber);
+        return matcher.matches();
+    }
+
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 
     public void btnUpdateOnAction(ActionEvent actionEvent) {
@@ -161,8 +192,8 @@ public class CustomerFormController {
 
         try {
             boolean isUpdated = customerBo.updateCustomer(dto);
-            if (isUpdated){
-                new Alert(Alert.AlertType.INFORMATION,"Customer "+dto.getCustomerCode()+" Updated!").show();
+            if (isUpdated) {
+                new Alert(Alert.AlertType.INFORMATION, "Customer " + dto.getCustomerCode() + " Updated!").show();
                 loadCustomerTable();
                 clearFields();
             }
