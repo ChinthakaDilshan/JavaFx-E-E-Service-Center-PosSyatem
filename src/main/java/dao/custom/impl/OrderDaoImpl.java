@@ -39,7 +39,9 @@ public class OrderDaoImpl implements OrderDao {
                     session.find(Item.class, detailDto.getItemCode()),
                     order,
 
-                    detailDto.getAdvancePrice()
+                    detailDto.getAdvancePrice(),
+                    detailDto.getStatus(),
+                    detailDto.getIssue()
             );
             session.save(orderDetail);
         }

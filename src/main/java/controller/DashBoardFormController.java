@@ -59,7 +59,14 @@ public class DashBoardFormController {
     }
 
     public void btnStatusOnAction(ActionEvent actionEvent) {
-
+        Stage stage = (Stage) paneDashBoard.getScene().getWindow();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/RepairInfomationForm.fxml"))));
+            stage.setTitle("Repair Infomation Form");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void btnPlaceOrderOnAction(ActionEvent actionEvent) {
@@ -100,7 +107,7 @@ public class DashBoardFormController {
         Stage stage = (Stage) paneDashBoard.getScene().getWindow();
         try {
             stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/RepairItemForm.fxml"))));
-            stage.setTitle("Item Form");
+            stage.setTitle("Repair Item Form");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,10 +1,14 @@
 package dao.custom.impl;
 
 import dao.custom.OrderDetailsDao;
+import dao.util.HibernateUtil;
 import db.DBConnection;
 import dto.OrderDetailDto;
 import dao.custom.OrderDetailsDao;
+import entity.Item;
 import entity.OrderDetail;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -44,6 +48,10 @@ public class OrderDetailDaoImpl implements OrderDetailsDao {
 
     @Override
     public List<OrderDetail> getAll() throws SQLException, ClassNotFoundException {
-        return null;
+        Session session = HibernateUtil.getSession();
+        Query query = session.createQuery("FROM OrderDetail ");
+        List<OrderDetail> list = query.list();
+        session.close();
+        return list;
     }
 }

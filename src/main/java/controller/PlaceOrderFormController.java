@@ -68,6 +68,9 @@ public class PlaceOrderFormController {
     public JFXTextField txtIssue;
     public Label lblDate;
     public JFXTextField txtAdvance;
+
+    @FXML
+    private JFXTextField txtStatus;
     private CustomerBo customerBo = new CustomerBoImpl();
 
     private ItemBo itemBo = new ItemBoImpl();
@@ -195,7 +198,11 @@ public class PlaceOrderFormController {
             list.add(new OrderDetailDto(
                     lblOrderID.getText(),
                     tm.getItemCode(),
-                    Double.parseDouble(txtAdvance.getText())
+                    Double.parseDouble(txtAdvance.getText()),
+                    txtStatus.getText(),
+                    txtIssue.getText()
+
+
             ));
         }
 
