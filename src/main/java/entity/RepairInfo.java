@@ -30,19 +30,20 @@ public class RepairInfo {
     RepairItem repairItem;
 
 
-
+    private int qty;
+    private double unitPrice;
     private double advance;
     private double total;
     private double serviceCharge;
 
 
-
-
-    public <T> RepairInfo(RepairInfoKey repairInfoKey, T t, Repairs repairs, double advance, double total, double serviceCharge) {
+    public <T> RepairInfo(RepairInfoKey repairInfoKey, T t, Repairs repairs,int qty,double unitPrice, double advance, double total, double serviceCharge) {
         this.id = id;
         this.orderId = orderId;
         this.item = item;
         this.repairItem = repairItem;
+        this.qty = qty;
+        this.unitPrice = unitPrice;
         this.advance = advance;
         this.total = total;
         this.serviceCharge = serviceCharge;

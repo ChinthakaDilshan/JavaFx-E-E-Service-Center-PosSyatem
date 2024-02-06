@@ -13,5 +13,7 @@ public class RepairsTm extends RecursiveTreeObject<RepairsTm> {
     private String repairItemCode;
     private String repairItemName;
     private double repairItemPrice;
+    private int qty;
+    private double amount;
     private Button btn;
 }

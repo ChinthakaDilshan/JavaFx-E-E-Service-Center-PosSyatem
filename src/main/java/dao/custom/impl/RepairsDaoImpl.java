@@ -20,17 +20,18 @@ public class RepairsDaoImpl implements RepairsDao {
         Repairs repairs = new Repairs(
                 dto.getOrderId()
         );
-        repairs.setItem(session.find(Item.class,dto.getItemCode()));
+        repairs.setItem(session.find(Item.class, dto.getItemCode()));
         session.save(repairs);
 
         List<RepairInfoDto> list = dto.getList(); //dto type
 
-        for (RepairInfoDto detailDto:list) {
+        for (RepairInfoDto detailDto : list) {
             RepairInfo repairInfo = new RepairInfo(
-                    new RepairInfoKey(detailDto.getOrderId(),detailDto.getItemCode(),detailDto.getRepairItemCode()),
+                    new RepairInfoKey(detailDto.getOrderId(), detailDto.getItemCode(), detailDto.getRepairItemCode()),
                     session.find(RepairItem.class, detailDto.getRepairItemCode()),
                     repairs,
-
+                    detailDto.getQty(),
+                    detailDto.getUnitPrice(),
                     detailDto.getAdvance(),
                     detailDto.getTotal(),
                     detailDto.getServiceCharge()

@@ -15,6 +15,7 @@ public class RepairItemTm {
     private String repairItemCode;
     private String repairItemName;
     private double repairItemPrice;
+    private int qty;
     private javafx.scene.control.Button btn;
 
 
@@ -23,6 +24,7 @@ public class RepairItemTm {
         this.repairItemCode = repairItemCode;
         this.repairItemName = repairItemName;
         this.repairItemPrice = repairItemPrice;
+        this.qty = qty;
         this.btn = btn;
     }
 
@@ -32,6 +34,7 @@ public class RepairItemTm {
                 "repairItemCode='" + repairItemCode + '\'' +
                 ", repairItemName='" + repairItemName + '\'' +
                 ", repairItemPrice='" + repairItemPrice + '\'' +
+                ", qty='" + qty + '\'' +
                 ", btn=" + btn +
                 '}';
     }

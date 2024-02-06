@@ -14,7 +14,8 @@ public class RepairItemDto {
     private String repairItemName;
     private double repairItemPrice;
 
-    public RepairItemDto(String repairItemCode,String repairItemName,double repairItemPrice){
+
+    public RepairItemDto(String repairItemCode, String repairItemName, double repairItemPrice) {
         this.repairItemCode = repairItemCode;
         this.repairItemName = repairItemName;
         this.repairItemPrice = repairItemPrice;
