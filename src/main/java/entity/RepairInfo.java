@@ -29,6 +29,10 @@ public class RepairInfo {
     @JoinColumn(name = "repairItem_code")
     RepairItem repairItem;
 
+    // In RepairInfo entity
+    @ManyToOne
+    @JoinColumn(name = "repairs_id")
+    private Repairs repairs;
 
     private int qty;
     private double unitPrice;

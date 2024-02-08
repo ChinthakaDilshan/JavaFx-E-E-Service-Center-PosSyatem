@@ -19,14 +19,14 @@ public class Email {
     private Session createSession(){
         // SMTP server configuration
         Properties props = new Properties();
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.host", "smtp.elasticemail.com");
+        props.put("mail.smtp.port", "2525");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
 
         // Sender and recipient configuration
         String senderEmail = "dilshanperera200325712934@gmail.com";
-        String senderPassword = "Dil0913#@";
+        String senderPassword = "1091790DAAB4BE5FF6FD6D2880319D901A5A";
 
         // Create a session with the SMTP server
         return session = Session.getInstance(props,
