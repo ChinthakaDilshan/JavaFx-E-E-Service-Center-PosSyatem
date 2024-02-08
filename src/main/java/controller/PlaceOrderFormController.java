@@ -10,11 +10,9 @@ import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import dao.custom.ItemDao;
 import dao.custom.impl.ItemDaoImpl;
-import dto.CustomerDto;
-import dto.ItemDto;
-import dto.OrderDetailDto;
-import dto.OrderDto;
+import dto.*;
 import dto.tm.OrderTm;
+import email.Email;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -32,6 +30,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -71,6 +75,10 @@ public class PlaceOrderFormController {
 
     @FXML
     private JFXTextField txtStatus;
+
+    private String email;
+
+    private int confirm = -1;
     private CustomerBo customerBo = new CustomerBoImpl();
 
     private ItemBo itemBo = new ItemBoImpl();
@@ -218,6 +226,7 @@ public class PlaceOrderFormController {
         try {
             boolean isSaved = orderBo.saveOrder(dto);
             if (isSaved){
+                confirm = sendEmail();
                 new Alert(Alert.AlertType.INFORMATION, "Order Saved!").show();
                 setOrderId();
             }else{
@@ -244,5 +253,35 @@ public class PlaceOrderFormController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private int sendEmail(){
+        int otp = -1;
+        String senderEmail = "dilshanperera200325712934@gmail.com";
+        for (CustomerDto dto : customers) {
+            if (dto.getCustomerCode().equals(txtCustomerID.getValue())) {
+               email= dto.getCustomerEmail();
+            }
+        }
+        String recipientEmail = email;
+        Session session = Email.getInstance().getSession();
+
+        try {
+            // Create a message
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(senderEmail));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(recipientEmail));
+            message.setSubject("E & E Service Center");
+            message.setText("Your Order Has Been Placed . Now It is on processing stage.");
+
+            // Send the message
+            Transport.send(message);
+
+            System.out.println("Email sent successfully.");
+        } catch (MessagingException e) {
+            System.out.println("Failed to send email. Error: " + e.getMessage());
+        }
+        return otp;
     }
 }

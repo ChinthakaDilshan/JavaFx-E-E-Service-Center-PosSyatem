@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -7,6 +8,7 @@ import bo.BoFactory;
 import bo.custom.UsersBo;
 import dao.util.BoType;
 import dto.UsersDto;
+import email.Email;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,6 +21,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -31,6 +39,8 @@ public class RegisterFormController implements Initializable {
     public TextField txtEmailReg;
     public TextField txtPasswordReg;
     public ChoiceBox txtJobRoleReg;
+
+    private int confirm =-1;
     private UsersBo usersBo = BoFactory.getInstance().getBo(BoType.USERS);
 
 
@@ -47,7 +57,9 @@ public class RegisterFormController implements Initializable {
                 boolean isSaved = usersBo.saveUsers(dto);
 
                 if (isSaved) {
+                    confirm = sendEmail();
                     new Alert(Alert.AlertType.INFORMATION, "User Registered!").show();
+
                 }
             }else {
                     new Alert(Alert.AlertType.ERROR, "Invalid  password!").show();
@@ -95,5 +107,30 @@ public class RegisterFormController implements Initializable {
                 "Employee"
         );
         txtJobRoleReg.setItems(jobRoles);
+    }
+
+    private int sendEmail(){
+        int otp = -1;
+        String senderEmail = "dilshanperera200325712934@gmail.com";
+        String recipientEmail = txtEmailReg.getText();
+        Session session = Email.getInstance().getSession();
+
+        try {
+            // Create a message
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(senderEmail));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(recipientEmail));
+            message.setSubject("E & E Service Center");
+            message.setText("User Registered SuccessFull!!!!");
+
+            // Send the message
+            Transport.send(message);
+
+            System.out.println("Email sent successfully.");
+        } catch (MessagingException e) {
+            System.out.println("Failed to send email. Error: " + e.getMessage());
+        }
+        return otp;
     }
 }
