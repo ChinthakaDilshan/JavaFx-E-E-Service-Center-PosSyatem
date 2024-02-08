@@ -18,7 +18,7 @@ public class RepairInfoDaoImpl implements RepairInfoDao {
 
     @Override
     public boolean save(RepairInfoDto dto) throws SQLException, ClassNotFoundException {
-     return false;
+        return false;
     }
 
     @Override

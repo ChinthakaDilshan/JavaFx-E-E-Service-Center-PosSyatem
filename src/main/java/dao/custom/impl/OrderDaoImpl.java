@@ -19,6 +19,7 @@ import java.util.List;
 
 public class OrderDaoImpl implements OrderDao {
     private OrderDetailsDao orderDetailDao = new OrderDetailDaoImpl();
+
     @Override
     public boolean save(OrderDto dto) throws SQLException, ClassNotFoundException {
 
@@ -28,17 +29,17 @@ public class OrderDaoImpl implements OrderDao {
                 dto.getOrderId(),
                 dto.getDate()
         );
-        order.setCustomer(session.find(Customer.class,dto.getCustId()));
+        order.setCustomer(session.find(Customer.class, dto.getCustId()));
         session.save(order);
 
         List<OrderDetailDto> list = dto.getList(); //dto type
 
-        for (OrderDetailDto detailDto:list) {
+        for (OrderDetailDto detailDto : list) {
             OrderDetail orderDetail = new OrderDetail(
                     new OrderDetailsKey(detailDto.getOrderId(), detailDto.getItemCode()),
                     session.find(Item.class, detailDto.getItemCode()),
                     order,
-
+                    detailDto.getDescription(),
                     detailDto.getAdvancePrice(),
                     detailDto.getStatus(),
                     detailDto.getIssue()
@@ -71,7 +72,7 @@ public class OrderDaoImpl implements OrderDao {
         String sql = "SELECT * FROM orders ORDER BY orderId DESC LIMIT 1";
         PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql);
         ResultSet resultSet = pstm.executeQuery();
-        if (resultSet.next()){
+        if (resultSet.next()) {
             return new OrderDto(
                     resultSet.getString(1),
                     resultSet.getString(2),

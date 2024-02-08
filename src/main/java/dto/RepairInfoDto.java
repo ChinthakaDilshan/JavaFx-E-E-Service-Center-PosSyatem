@@ -2,9 +2,7 @@ package dto;
 
 import lombok.*;
 
-import java.util.List;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -18,5 +16,19 @@ public class RepairInfoDto {
     private double serviceCharge;
     private double advance;
     private double total;
+
+    public RepairInfoDto(String orderId, String itemCode, String repairItemCode, int qty, double unitPrice, double serviceCharge, double advance, double total) {
+        this.orderId = orderId;
+        this.itemCode = itemCode;
+        this.repairItemCode = repairItemCode;
+        this.qty = qty;
+        this.unitPrice = unitPrice;
+        this.serviceCharge = serviceCharge;
+        this.advance = advance;
+        this.total = total;
+    }
+
+
+
 
 }

@@ -16,6 +16,9 @@ import dao.util.BoType;
 import dto.*;
 import dto.tm.OrderTm;
 import dto.tm.RepairsTm;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,9 +29,12 @@ import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static java.lang.Integer.parseInt;
@@ -74,52 +80,42 @@ public class RepairInformationFormController {
     private List<OrderDetailDto> orderDetail;
     private ObservableList<RepairsTm> tmList = FXCollections.observableArrayList();
 
-    public void initialize() {
-        colAdditionalItem.setCellValueFactory(new TreeItemPropertyValueFactory<>("repairItemCode"));
-        colAdditionalItemName.setCellValueFactory(new TreeItemPropertyValueFactory<>("repairItemName"));
-        colAdditionalItemPrice.setCellValueFactory(new TreeItemPropertyValueFactory<>("repairItemPrice"));
-        colQty.setCellValueFactory(new TreeItemPropertyValueFactory<>("qty"));
-        colAmount.setCellValueFactory(new TreeItemPropertyValueFactory<>("amount"));
-        colOption.setCellValueFactory(new TreeItemPropertyValueFactory<>("btn"));
-
-
-        try {
-            orderDetail = orderDetailBo.allOrderDetails();
-            repairItems = repairItemBo.allRepairItems();
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        loadOrderIds();
-        loadRepairItemCodes();
-        loadDescription();
-
-
-        txtAdditionalItemCode.getSelectionModel().selectedItemProperty().addListener((observableValue, o, newValue) -> {
-            for (RepairItemDto dto : repairItems) {
-                if (dto.getRepairItemCode().equals(newValue.toString())) {
-                    lblAdditionalItemName.setText(dto.getRepairItemName());
-                    lblAdditionalItemPrice.setText(String.valueOf(dto.getRepairItemPrice()));
-                }
-            }
-        });
-
-        txtOrderID.getSelectionModel().selectedItemProperty().addListener((observableValue, o, newValue) -> {
-            ObservableList list = FXCollections.observableArrayList();
-            for (OrderDetailDto dto : orderDetail) {
-                if (dto.getOrderId().equals(newValue.toString())) {
-                    list.add(dto.getItemCode());
-                    txtStatus.setText(dto.getStatus());
-                    lblAdvance.setText(String.valueOf(dto.getAdvancePrice()));
-                    txtItemCode.setItems(list);
-                    lblIssue.setText(dto.getIssue());
-
-
-                }
-            }
-        });
-
-
-    }
+//    public void initialize(){
+//
+//        colAdditionalItem.setCellValueFactory(new TreeItemPropertyValueFactory<>("repairItemCode"));
+//        colAdditionalItemName.setCellValueFactory(new TreeItemPropertyValueFactory<>("repairItemName"));
+//        colAdditionalItemPrice.setCellValueFactory(new TreeItemPropertyValueFactory<>("repairItemPrice"));
+//        colQty.setCellValueFactory(new TreeItemPropertyValueFactory<>("qty"));
+//        colAmount.setCellValueFactory(new TreeItemPropertyValueFactory<>("amount"));
+//        colOption.setCellValueFactory(new TreeItemPropertyValueFactory<>("btn"));
+//
+//        try {
+//            orderDetail = orderDetailBo.allOrderDetails();
+//            repairItems = repairItemBo.allRepairItems();
+//        } catch (SQLException | ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//
+//        loadDescription();
+//        loadOrderIds();
+//        loadRepairItemCodes();
+//
+//        txtOrderID.getSelectionModel().selectedItemProperty().addListener((observableValue, o, newValue) -> {
+//            for (OrderDetailDto dto:orderDetail) {
+//                if (dto.getOrderId().equals(newValue.toString())){
+//                    ObservableList list = FXCollections.observableArrayList();
+//                    txtStatus.setText(dto.getStatus());
+//                    lblAdvance.setText(String.valueOf(dto.getAdvancePrice()));
+//                    list.add(dto.getItemCode());
+//                    txtItemCode.setItems(list);
+//
+//                }
+//            }
+//        });
+//
+//
+//
+//    }
 
     private void loadDescription() {
         ObservableList list = FXCollections.observableArrayList();
@@ -215,6 +211,10 @@ public class RepairInformationFormController {
     }
 
     public void btnCloseOrderOnAction(ActionEvent actionEvent) {
+
+    }
+
+    public void btnSaveOnAction(ActionEvent actionEvent) {
 
     }
 }

@@ -23,7 +23,7 @@ public class OrderDetail {
     @MapsId("orderId")
     @JoinColumn(name = "order_id")
     Orders orders;
-
+    private String description;
     private double advancePrice;
     private String status;
     private String issue;

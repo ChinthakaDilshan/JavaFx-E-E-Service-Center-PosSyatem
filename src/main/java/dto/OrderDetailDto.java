@@ -10,6 +10,7 @@ import lombok.*;
 public class OrderDetailDto {
     private String orderId;
     private String itemCode;
+    private String description;
     private double advancePrice;
     private String status;
     private String issue;

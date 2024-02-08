@@ -21,7 +21,7 @@ public class RepairInfo {
     @ManyToOne
     @MapsId("itemCode")
     @JoinColumn(name = "item_code")
-    Item item;
+    private Item item;
 
 
     @ManyToOne
@@ -37,7 +37,7 @@ public class RepairInfo {
     private double serviceCharge;
 
 
-    public <T> RepairInfo(RepairInfoKey repairInfoKey, T t, Repairs repairs,int qty,double unitPrice, double advance, double total, double serviceCharge) {
+    public <T> RepairInfo(RepairInfoKey repairInfoKey, T t, Repairs repairs, int qty, double unitPrice, double advance, double total, double serviceCharge) {
         this.id = id;
         this.orderId = orderId;
         this.item = item;
@@ -49,3 +49,7 @@ public class RepairInfo {
         this.serviceCharge = serviceCharge;
     }
 }
+
+
+
+

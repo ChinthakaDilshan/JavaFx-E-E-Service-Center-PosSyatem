@@ -198,6 +198,7 @@ public class PlaceOrderFormController {
             list.add(new OrderDetailDto(
                     lblOrderID.getText(),
                     tm.getItemCode(),
+                    txtDescription.getText(),
                     Double.parseDouble(txtAdvance.getText()),
                     txtStatus.getText(),
                     txtIssue.getText()

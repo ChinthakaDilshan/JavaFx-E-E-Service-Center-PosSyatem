@@ -35,7 +35,6 @@ public class RegisterFormController implements Initializable {
 
 
 
-        // Your existing code...
 
         public void btnRegisterOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
             String email = txtEmailReg.getText();

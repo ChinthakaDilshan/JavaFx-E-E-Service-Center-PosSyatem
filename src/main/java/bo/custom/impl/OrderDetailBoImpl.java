@@ -22,6 +22,7 @@ public class OrderDetailBoImpl implements OrderDetailBo{
             list.add(new OrderDetailDto(
                     orderDetail.getOrders().getOrderId(),
                     orderDetail.getItem().getItemCode(),
+                    orderDetail.getDescription(),
                     orderDetail.getAdvancePrice(),
                     orderDetail.getStatus(),
                     orderDetail.getIssue()
